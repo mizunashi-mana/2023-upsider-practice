@@ -1,0 +1,2 @@
+backend: env RUBY_DEBUG_OPEN=true PORT=3000 bin/rails server
+frontend: pnpm run dev

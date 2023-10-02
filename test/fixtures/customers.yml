@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one_of_org1:
+  id: '01HBN3KGE8KXZBYCC05MYCF61J'
+  target_organization_id: '01HBN3N2WVC1J46JFMAPWBWFJA'
+  name: customer 1
+  others:
+    representative_name: repr of cust1
+    contact_phone_number: '000000001'
+    post_number: '000-0001'
+    address: addr of cust1
+
+two_of_org1:
+  id: '01HBN3KQHB86KYS3RKT6H696V5'
+  target_organization_id: '01HBN3N2WVC1J46JFMAPWBWFJA'
+  name: customer 2
+  others:
+    representative_name: repr of cust2
+    contact_phone_number: '000000002'
+    post_number: '000-0002'
+    address: addr of cust2
+
+three_of_org2:
+  id: '01HBN3MW1P7YZYPXKK7GMH5786'
+  target_organization_id: '01HBN3NAPWJHZ1EY9WE224TVTE'
+  name: customer 3
+  others:
+    representative_name: repr of cust3
+    contact_phone_number: '000000003'
+    post_number: '000-0003'
+    address: addr of cust3

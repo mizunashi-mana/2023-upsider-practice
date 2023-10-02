@@ -1,0 +1,47 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one_of_cust1:
+  id: '01HBN3T9ZS6BHAHX24RC8N170J'
+  issued_customer_id: '01HBN3KGE8KXZBYCC05MYCF61J'
+  status: in_progress
+  issued_date: '2022-08-09'
+  payment_due_date: '2022-10-31'
+  payment_amount_jpy: 2110
+  claimed_amount_jpy: 2000
+  others:
+    transaction_fee_jpy: 80
+    transaction_fee_ratio: 0.04
+    transaction_fee_tax_jpy: 8
+    transaction_fee_tax_ratio: 0.1
+
+two_of_cust2:
+  id: '01HBN3VAKV90SHC6X3Q8TT86DC'
+  issued_customer_id: '01HBN3KQHB86KYS3RKT6H696V5'
+  status: payed
+  issued_date: '2023-02-13'
+  payment_due_date: '2023-04-30'
+  payment_amount_jpy: 3610
+  claimed_amount_jpy: 3610
+  others:
+    transaction_fee_jpy: 144
+    transaction_fee_ratio: 0.04
+    transaction_fee_tax_jpy: 14
+    transaction_fee_tax_ratio: 0.1
+
+three_of_cust3:
+  id: '01HBN3VHJ4RTDHWF0168NP3JS8'
+  issued_customer_id: '01HBN3MW1P7YZYPXKK7GMH5786'
+  status: error
+  issued_date: '2023-05-19'
+  payment_due_date: '2023-06-30'
+  payment_amount_jpy: 1310
+  claimed_amount_jpy: 1211
+  others:
+    transaction_fee_jpy: 48
+    transaction_fee_ratio: 0.04
+    transaction_fee_tax_jpy: 4
+    transaction_fee_tax_ratio: 0.1

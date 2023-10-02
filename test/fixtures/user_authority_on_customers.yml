@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one_of_user1_and_cust2:
+  id: '01HBN40KWV15364555T18ARZ95'
+  user_id: '01HBN3WDXD7FAQQA1999E7ETPP'
+  customer_id: '01HBN3KQHB86KYS3RKT6H696V5'
+  others:
+    authority_type: operator
+
+two_of_user2_and_cust3:
+  id: '01HBN40V3B61DRTDXFHBK9WT68'
+  user_id: '01HBN3WNWQMFJCVY6N1E2Z4WC2'
+  customer_id: '01HBN3MW1P7YZYPXKK7GMH5786'
+  others:
+    authority_type: viewer

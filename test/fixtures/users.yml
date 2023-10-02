@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one_member_of_org1:
+  id: '01HBN3WDXD7FAQQA1999E7ETPP'
+  email: user1@example.com
+  password_digest: $2a$04$irPWes0SouLk8ac8ZEyXeOtYXr3LYL4VvFPNVHrKNskfUimx.8rS.
+  organization_id: '01HBN3N2WVC1J46JFMAPWBWFJA'
+  authority_on_organization:
+    authority_type_on_organization: member
+
+two_admin_of_org2:
+  id: '01HBN3WNWQMFJCVY6N1E2Z4WC2'
+  email: user2@example.com
+  password_digest: $2a$04$A9GT4..N2Ns7BqaJzxP09ekI3OAkR7E7lqgP5ksJgEeas23IKDgbu
+  organization_id: '01HBN3NAPWJHZ1EY9WE224TVTE'
+  authority_on_organization:
+    authority_type_on_organization: admin
+
+three_admin_of_org1:
+  id: '01HBQHDN3HK8GD582C2RXZJB0B'
+  email: user3@example.com
+  password_digest: $2a$04$RhbtX/cmrAVAdPfFxn34Te60otPusLH1tNcavt/gRj1aiEGryeT.W
+  organization_id: '01HBN3N2WVC1J46JFMAPWBWFJA'
+  authority_on_organization:
+    authority_type_on_organization: admin
