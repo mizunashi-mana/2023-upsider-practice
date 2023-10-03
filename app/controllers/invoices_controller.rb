@@ -74,8 +74,9 @@ class InvoicesController < ApplicationController
     @payment_due_date_end = params.required(:payment_due_date_end).to_date
 
     @authority = user_authority_on_organization(@user)
-    @invoices = if @authority[:invoices_list]
-      Invoice.joins(:issued_customer).where(
+    if @authority[:invoices_list]
+      @customers = Customer.where(target_organization_id: @user.organization_id)
+      @invoices = Invoice.joins(:issued_customer).where(
         issued_customer: {
           target_organization_id: @user.organization_id,
         },
@@ -85,7 +86,12 @@ class InvoicesController < ApplicationController
       )
     else
       # In the non-admin case, filter customers just to be sure.
-      Invoice.joins(:issued_customer).joins(issued_customer: :user_authority_on_customers).where(
+      @customers = Customer.joins(:user_authority_on_customers).where(
+        customers: {
+          target_organization_id: @user.organization_id
+        }
+      )
+      @invoices = Invoice.joins(:issued_customer).joins(issued_customer: :user_authority_on_customers).where(
         issued_customer: {
           target_organization_id: @user.organization_id,
         },
@@ -98,6 +104,7 @@ class InvoicesController < ApplicationController
       )
     end
 
+    @customer_id_to_customer = @customers.to_h { |x| [x.id, x] }
     @viewable_invoices = @invoices.select do |invoice|
       if @authority[:invoices_list]
         true
@@ -109,9 +116,13 @@ class InvoicesController < ApplicationController
 
     render json: {
       invoices: @viewable_invoices.map do |invoice|
+        @issued_customer = @customer_id_to_customer[invoice.issued_customer_id]
         {
           id: invoice.id,
-          issued_customer_id: invoice.issued_customer_id,
+          issued_customer: {
+            id: @issued_customer.id,
+            name: @issued_customer.name,
+          },
           status: invoice.public_status,
           issued_date: invoice.issued_date,
           payment_due_date: invoice.payment_due_date,

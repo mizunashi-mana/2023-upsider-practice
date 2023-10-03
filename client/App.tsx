@@ -141,7 +141,10 @@ const SessionView: React.FC<{
 
 type Invoice = {
   id: string;
-  issued_customer_id: string;
+  issued_customer: {
+    id: string;
+    name: string;
+  };
   status: string;
   issued_date: string;
   payment_due_date: string;
@@ -215,7 +218,7 @@ const InvoicesListView: React.FC = () => {
           return (
             <tr key={invoice.id}>
               <td>{invoice.id}</td>
-              <td>{invoice.issued_customer_id}</td>
+              <td title={invoice.issued_customer.id}>{invoice.issued_customer.name}</td>
               <td>{invoice.status}</td>
               <td>{invoice.issued_date}</td>
               <td>{invoice.payment_due_date}</td>

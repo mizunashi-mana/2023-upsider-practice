@@ -12,7 +12,7 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
         issued_customer_id: '01HBN3KQHB86KYS3RKT6H696V5',
         issued_date: '2023-08-25',
         payment_due_date: payment_due_date.strftime('%Y%m%d'),
-        claimed_amount_jpy: 2123
+        claimed_amount_jpy: 2123,
       }
     assert_response :success
     @response_body = JSON.parse(@response.body)
@@ -110,7 +110,10 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
         'invoices' => [
           {
             'id' => '01HBN3VAKV90SHC6X3Q8TT86DC',
-            'issued_customer_id' => '01HBN3KQHB86KYS3RKT6H696V5',
+            'issued_customer' => {
+              'id' => '01HBN3KQHB86KYS3RKT6H696V5',
+              'name' => 'customer 2',
+            },
             'status' => 'payed',
             'issued_date' => '2023-02-13',
             'payment_due_date' => '2023-04-30',
@@ -150,7 +153,10 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
         'invoices' => [
           {
             'id' => '01HBN3T9ZS6BHAHX24RC8N170J',
-            'issued_customer_id' => '01HBN3KGE8KXZBYCC05MYCF61J',
+            'issued_customer' => {
+              'id' => '01HBN3KGE8KXZBYCC05MYCF61J',
+              'name' => 'customer 1',
+            },
             'status' => 'unpayed',
             'issued_date' => '2022-08-09',
             'payment_due_date' => '2022-10-31',
