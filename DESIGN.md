@@ -1,5 +1,69 @@
 # Design
 
+## アーキテクチャ
+
+```mermaid
+C4Context
+
+System(webUI, "Web UI", "Running on browser of users developed by us.")
+Person(user, "User")
+
+Boundary(b1, "Server-Side") {
+  System(apiServer, "API Server", "Running as processes of instances developed by us.")
+
+  SystemDb_Ext(session_store, "Session Store", "Stores all of sessions")
+  SystemDb_Ext(database, "Database", "Stores all of the core information about customers, invoices, etc.")
+}
+
+Rel(user, webUI, "Uses", "Browser")
+BiRel(webUI, apiServer, "Gets and posts", "HTTP")
+BiRel(apiServer, session_store, "Gets and sets")
+BiRel(apiServer, database, "Selects, inserts and updates", "SQL")
+```
+
+### 認証
+
+```mermaid
+sequenceDiagram
+Browser->>+Server: First access
+Server->>Session Store: Issue new session with session ID
+Server-->>-Browser: Set cookie with session ID
+Browser->>+Server: Login with session ID on cookie
+Server->>Session Store: Set user ID on session
+Server-->>-Browser: Authentication success
+Browser->>+Server: Request with session ID on cookie
+Server->>Session Store: Get session
+Session Store-->>Server: The session with user ID
+Note over Server: Process with session
+Server-->>-Browser: Response
+```
+
+### 認可
+
+```mermaid
+erDiagram
+    Organization |o--o{ User : members
+    UserAuthorityOnCustomer }o--|| User : members
+    Customer ||--o{ UserAuthorityOnCustomer: members
+    Organization |o--o{ Customer : contracts
+    Customer |o--o{ Invoice : issues
+    Customer |o--o{ CustomerBankAccount : owns
+```
+
+ユーザは、所属する企業 (organization)、取引先 (customer) から辿れるリソースに対して、企業、取引先毎の権限で許可された操作のみ行える。
+
+企業毎権限:
+
+* Admin: 企業の管理者権限。取引先毎権限 (UserAuthorityOnCustomer) を無視し、企業に紐づくリソースに対して、全ての操作が許可される。
+* Member: 企業の一般権限。取引先毎権限による取引先への操作と、企業に対する一部操作が許可される。
+
+取引先毎権限:
+
+* Operator: 業務権限。取引先に紐づくソースに対して、書込・読込両方の操作が許可される。
+* Viewer: 閲覧権限。取引先に紐づくソースに対して、読込操作が許可される。
+
+詳しくは、[`app/controllers/concerns/user_authority_actions.rb`](./app/controllers/concerns/user_authority_actions.rb) を参照。
+
 ## ドメインの補完
 
 ### 補完事項
@@ -32,3 +96,6 @@
   - CSRF は、認証必須で、認証情報を HTTP only cookie で管理しており、cookie を samesite=lax の範囲で管理していて、ブラウザの実装がちゃんとしてる前提の元では考えなくて良いので、今回はスコープ外。
 * ちゃんとした UI/UX を持つクライアント
   - 今回は主題ではない為、最低限動作感を持つためだけのクライアントにして時間はかけない。
+* 詳細なバリデーションエラー
+  - ユーザヒントのためのバリデーションは基本的にクライアント側で行う想定。
+  - サーバ側は、認可が通って以降、サーバ側でしか分からないかつ外部に出していい場合のみエラー内容を返す。
