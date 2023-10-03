@@ -50,9 +50,18 @@ class InvoicesController < ApplicationController
 
     @current_date = Date.today
     if !validate_payable_due_date(@invoice.payment_due_date, @current_date)
-      return render status: :bad_request
+      return render json: {
+        status: 'validation failed',
+        error: 'not payable',
+      }
     end
 
+    if !@invoice.valid?
+      return render json: {
+        status: 'validation failed',
+        error: 'invalid format',
+      }
+    end
     if !@invoice.save
       logger.warn "Failed to save invoice."
       logger.debug @invoice.errors.inspect
@@ -60,6 +69,7 @@ class InvoicesController < ApplicationController
     end
 
     render json: {
+      status: 'ok',
       invoice_id: @invoice.id,
     }
   end

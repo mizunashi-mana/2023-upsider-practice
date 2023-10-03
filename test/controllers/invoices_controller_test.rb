@@ -93,7 +93,14 @@ class InvoicesControllerTest < ActionDispatch::IntegrationTest
         payment_due_date: Date.today.next_day(1),
         claimed_amount_jpy: 2123
       }
-    assert_response :bad_request
+    assert_response :success
+    assert_equal(
+      {
+        'status' => 'validation failed',
+        'error' => 'not payable',
+      },
+      JSON.parse(@response.body),
+    )
   end
 
   test "should get list of invoices" do

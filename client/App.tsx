@@ -286,7 +286,14 @@ const NewInvoiceView: React.FC = () => {
         } else if (isError) {
           return <p>Error!</p>;
         } else if (data !== undefined) {
-          return <p>Registered: {data.invoice_id}</p>;
+          switch (data.status) {
+            case 'ok':
+              return <p>Registered: {data.invoice_id}</p>;
+            case 'validation failed':
+              return <p>Failed: {data.error}</p>;
+            default:
+              throw new Error(`Unknown status: ${data.status}`);
+          }
         }
       })()}
     </form>
